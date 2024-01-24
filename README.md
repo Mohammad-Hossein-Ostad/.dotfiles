@@ -1,3 +1,3 @@
-Personal noevim config
+## Personal noevim config
 
 enjoy! ❤️
