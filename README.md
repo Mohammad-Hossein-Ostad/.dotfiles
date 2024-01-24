@@ -1,0 +1,3 @@
+Personal noevim config
+
+enjoy! ❤️
