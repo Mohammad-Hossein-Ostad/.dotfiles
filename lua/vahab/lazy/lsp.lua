@@ -15,7 +15,7 @@ return {
   },
 
   config = function()
-    local cmp = require'cmp'
+    local cmp = require 'cmp'
 
     require("fidget").setup({})
     require("mason").setup()
@@ -26,10 +26,12 @@ return {
         "tsserver",
       },
       handlers = {
-        function (server_name) -- default handler (optional)
-          require("lspconfig")[server_name].setup {}
+        function(server_name) -- default handler (optional)
+          require("lspconfig")[server_name].setup {
+            capabilities = require('cmp_nvim_lsp').default_capabilities()
+          }
         end,
-        ["lua_ls"] = function ()
+        ["lua_ls"] = function()
           local lspconfig = require("lspconfig")
           lspconfig.lua_ls.setup {
             settings = {
@@ -44,8 +46,8 @@ return {
       }
     })
 
-    local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
+    local cmp_select = { behavior = cmp.SelectBehavior.Select }
     cmp.setup({
       snippet = {
         expand = function(args)
@@ -56,14 +58,14 @@ return {
         ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
         ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
         ['<Enter>'] = cmp.mapping.confirm({ select = true }),
-        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C->'] = cmp.mapping.complete(),
       }),
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
       }, {
-          { name = 'buffer' },
-        })
+        { name = 'buffer' },
+      })
 
     })
 
@@ -79,7 +81,6 @@ return {
       },
     })
 
-   vim.api.nvim_set_option("clipboard", "unnamed")
-
+    vim.api.nvim_set_option("clipboard", "unnamed")
   end
 }
